@@ -36,11 +36,11 @@ public class DeterministicPlayer implements Player {
         }
         else{
             // try to intercept
-            action = intercept(state);
-            if(action == null){
+            //action = intercept(state);
+            //if(action == null){
                 // fall back to moving to own goal
                 action = moveToGoal(state, goal);
-            }
+            //}
 
         }
         return action;
