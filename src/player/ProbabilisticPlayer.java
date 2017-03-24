@@ -16,7 +16,7 @@ public class ProbabilisticPlayer {
 
     public Action chooseAction(State state){
         boolean inPosession = state.getPossession();
-
+        return null;
 
     }
 
