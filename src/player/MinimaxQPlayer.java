@@ -30,7 +30,7 @@ public class MinimaxQPlayer implements Player {
 	private ExplorationStrategy strat;
 
 	double alpha = 1.0;
-	double explor = 0.9;
+	double explor = 0.2;
 	double gamma;
 	double decay;
 
@@ -45,7 +45,7 @@ public class MinimaxQPlayer implements Player {
 	private void initialize() {
 		double[] pi_val = new double[Action.values().length];
 		for(int i = 0; i < Action.values().length; i++){
-			pi_val[i] = 1/Action.values().length;
+			pi_val[i] = 1.0/Action.values().length;
 		}
 
 //		For all s in S, a in A, and o in O,
@@ -190,6 +190,7 @@ public class MinimaxQPlayer implements Player {
 		lp.setMinProblem(false);
 
 		LinearProgramSolver solver = SolverFactory.newDefault();
+
 		double[] sol = solver.solve(lp);
 		double[] newPi = new double[allActions.length];
 		System.arraycopy(sol, 1, newPi, 0, newPi.length);

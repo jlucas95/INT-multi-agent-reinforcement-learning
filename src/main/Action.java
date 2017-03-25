@@ -1,5 +1,7 @@
 package main;
 
-public enum Action {
+import java.io.Serializable;
+
+public enum Action implements Serializable {
 	NORTH, SOUTH, EAST, WEST, STAND;
 }

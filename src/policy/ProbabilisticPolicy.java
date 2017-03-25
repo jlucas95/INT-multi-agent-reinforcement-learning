@@ -1,12 +1,13 @@
 package policy;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import main.Action;
 import main.State;
 
-public class ProbabilisticPolicy extends HashMap<State, double[]> implements Policy {
+public class ProbabilisticPolicy extends HashMap<State, double[]> implements Policy, Serializable {
 	/** generated id */
 	private static final long serialVersionUID = -7901905496277036579L;
 

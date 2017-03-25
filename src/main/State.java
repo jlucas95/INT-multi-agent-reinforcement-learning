@@ -1,8 +1,9 @@
 package main;
 
 import java.awt.Point;
+import java.io.Serializable;
 
-public class State {
+public class State implements Serializable {
 	public static final boolean FIRST_PLAYER = true;
 	public static final boolean SECOND_PLAYER = false;
 

@@ -37,7 +37,7 @@ public class Simulator {
 
 	public void simulate(int steps, double drawProbability) {
 		resetCounters();
-
+		
 		State state = initializeRandomly();
 
 		for (int i = 0; i < steps; i++) {
