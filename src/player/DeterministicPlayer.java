@@ -28,7 +28,7 @@ public class DeterministicPlayer implements Player {
         boolean inPosession = state.getPossession();
         Action action;
         // check if in posession of ball
-        if (inPosession){// if true -> attack
+        if (inPosession == player){// if true -> attack
             // move towards enemy goal
             // for every action calculate distance to goal
             action = moveToGoal(state, enemyGoal);

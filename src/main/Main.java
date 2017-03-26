@@ -11,22 +11,36 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		//training();
+		training();
 
 		Policy MM = loadPolicy("MM");
 		Policy QR = loadPolicy("QR");
 		Policy QQ = loadPolicy("QQ");
+		Policy QD = loadPolicy("QD");
+		Policy QP = loadPolicy("QP");
 
-		Player MMplayer = new PolicyPlayer(MM);
-		Player MMplayer2 = new PolicyPlayer(MM);
-		PlayMatch(MMplayer, MMplayer2);
 
-//		Player QRplayer = new PolicyPlayer(QR);
-//		Player QRplayer2 = new PolicyPlayer(QR);
-//		PlayMatch(QRplayer, QRplayer2);
+//		Task 1
+	    Player QPplayer = new PolicyPlayer(QR);
+	    Player QDplayer = new PolicyPlayer(QD);
+	    Player Dplayer = new DeterministicPlayer(State.SECOND_PLAYER);
+	    Player Pplayer = new ProbabilisticPlayer(State.SECOND_PLAYER);
 
-//		Player QQplayer = new PolicyPlayer(QQ);
-//		PlayMatch(QQplayer, QQplayer);
+	    System.out.print("QD VS Dpalyer ");
+		PlayMatch(QDplayer, Dplayer);
+		System.out.print("QD VS Pplayer ");
+		PlayMatch(QDplayer, Pplayer);
+		System.out.print("QP VS Dplayer ");
+		PlayMatch(QPplayer,Dplayer);
+		System.out.print("QP VS Pplayer ");
+		PlayMatch(QPplayer,Pplayer);
+		System.out.print("Pplayer VS Dplayer ");
+		Pplayer = new ProbabilisticPlayer(State.FIRST_PLAYER);
+		PlayMatch(Pplayer,Dplayer);
+
+
+
+
 
 
 
@@ -93,19 +107,19 @@ public class Main {
 	}
 
 	private static void training(){
-//		// QD
-//		QLearningPlayer QDp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
-//		Player QDp2 = new DeterministicPlayer(State.SECOND_PLAYER);
-//		Policy QD = train(QDp1, QDp2);
-//		System.out.println("saving QD");
-//		savePolicy(QD, "QD");
-//		// QP
-//		QLearningPlayer QPp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
-//		Player QPp2 = new DeterministicPlayer(State.SECOND_PLAYER);
-//		Policy QP = train(QPp1, QPp2);
-//		System.out.println("saving QD");
-//		savePolicy(QP, "QP");
-//		// QR
+		// QD
+		QLearningPlayer QDp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
+		Player QDp2 = new DeterministicPlayer(State.SECOND_PLAYER);
+		Policy QD = train(QDp1, QDp2);
+		System.out.println("saving QD");
+		savePolicy(QD, "QD");
+		// QP
+		QLearningPlayer QPp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
+		Player QPp2 = new ProbabilisticPlayer(State.SECOND_PLAYER);
+		Policy QP = train(QPp1, QPp2);
+		System.out.println("saving QP");
+		savePolicy(QP, "QP");
+		// QR
 //		QLearningPlayer QRp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
 //		Player QRp2 = new RandomPlayer(State.SECOND_PLAYER);
 //		Policy QR = train(QRp1, QRp2);

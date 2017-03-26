@@ -25,7 +25,7 @@ public class ProbabilisticPlayer implements Player {
         Point distance = new Point(firstPlayer.x - secondPlayer.x, firstPlayer.y - secondPlayer.y);
 
         // whether player got the ball
-        if (!inPosession) {
+        if (inPosession == player) {
             // If its the first player(A)
             if (player) {
                 // 3 different kinds of situation:  1. Same row 2. left-up corner(stay put & moving forward & down )
@@ -89,17 +89,23 @@ public class ProbabilisticPlayer implements Player {
             // if its the first player
             if (player){
                 // 3 different kinds of situation:  1. Same row 2. left-up  3. left-down
-                //  In the same row ( 33.3% up & 33.3% down &  33.3% put )
                 if (distance.x == 0) {
-                    return Action.STAND;
+                    possibleActions[0] = Action.WEST;
+                    possibleActions[1] = Action.STAND;
+                    return this.chooseMoving(possibleActions);
+                    // Moving forward or STAND
                 }
                 // left-down ()
                 else if (distance.x > 0 && distance.y < 0) {
-                    return Action.SOUTH;
+                    possibleActions[0] = possibleActions[1] = Action.SOUTH;
+                    return  this.chooseMoving(possibleActions);
+                    // Moving forward
+
                 }
                 // left-up
                 else if (distance.x > 0 && distance.y > 0) {
-                    return Action.NORTH;
+                    possibleActions[0] = possibleActions[1] = Action.NORTH;
+                    return  this.chooseMoving(possibleActions);
                 }
                 else{
                     return Action.EAST;
@@ -108,14 +114,21 @@ public class ProbabilisticPlayer implements Player {
             // Its second player
             else {
                 if (distance.y == 0) {
-                    return Action.STAND;
+                    possibleActions[0] = Action.EAST;
+                    possibleActions[1] = Action.STAND;
+                    return this.chooseMoving(possibleActions);
+                    // 向前
                 }
                 else if (distance.x > 0 && distance.y < 0) {
-                    return Action.NORTH;
+                    possibleActions[0] = possibleActions[1] = Action.NORTH;
+                    return this.chooseMoving(possibleActions);
+                    // Moving xx
+
                 }
                 // right-down corner (up , right ,put )
                 else if (distance.x > 0 && distance.y > 0) {
-                    return Action.SOUTH;
+                    possibleActions[0] = possibleActions[1] = Action.SOUTH;
+                    return this.chooseMoving(possibleActions);
 
                 } else {
                     return Action.WEST;
