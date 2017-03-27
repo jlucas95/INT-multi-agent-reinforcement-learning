@@ -11,38 +11,32 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		training();
-
-		Policy MM = loadPolicy("MM");
+//		training();
+//		Policy MM = loadPolicy("MM");
 		Policy QR = loadPolicy("QR");
 		Policy QQ = loadPolicy("QQ");
 		Policy QD = loadPolicy("QD");
 		Policy QP = loadPolicy("QP");
 
-
 //		Task 1
-	    Player QPplayer = new PolicyPlayer(QR);
+	    Player QPplayer = new PolicyPlayer(QP);
 	    Player QDplayer = new PolicyPlayer(QD);
 	    Player Dplayer = new DeterministicPlayer(State.SECOND_PLAYER);
+		Player Dplayer1 = new DeterministicPlayer(State.FIRST_PLAYER);
 	    Player Pplayer = new ProbabilisticPlayer(State.SECOND_PLAYER);
+	    Player Pplayer1 = new ProbabilisticPlayer(State.FIRST_PLAYER);
 
 	    System.out.print("QD VS Dpalyer ");
-		PlayMatch(QDplayer, Dplayer);
+		PlayMatch(QDplayer, Dplayer);   // It would be 0 to 0 when Dplayer as the first character
 		System.out.print("QD VS Pplayer ");
 		PlayMatch(QDplayer, Pplayer);
 		System.out.print("QP VS Dplayer ");
 		PlayMatch(QPplayer,Dplayer);
-		System.out.print("QP VS Pplayer ");
+		System.out.print("QP VS Pplayer ");  // It would always 0 to 0
 		PlayMatch(QPplayer,Pplayer);
 		System.out.print("Pplayer VS Dplayer ");
 		Pplayer = new ProbabilisticPlayer(State.FIRST_PLAYER);
 		PlayMatch(Pplayer,Dplayer);
-
-
-
-
-
-
 
 //		//QLearningPlayer p1 = new QLearningPlayer(State.FIRST_PLAYER, 0.9, new RandomExploration());
 //		Player p1 = new DeterministicPlayer(State.FIRST_PLAYER);
@@ -119,18 +113,18 @@ public class Main {
 		Policy QP = train(QPp1, QPp2);
 		System.out.println("saving QP");
 		savePolicy(QP, "QP");
-		// QR
-//		QLearningPlayer QRp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
-//		Player QRp2 = new RandomPlayer(State.SECOND_PLAYER);
-//		Policy QR = train(QRp1, QRp2);
-//		System.out.println("saving QR");
-//		savePolicy(QR, "QR");
+//		 QR
+		QLearningPlayer QRp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
+		Player QRp2 = new RandomPlayer(State.SECOND_PLAYER);
+		Policy QR = train(QRp1, QRp2);
+		System.out.println("saving QR");
+		savePolicy(QR, "QR");
 		// QQ
-//		QLearningPlayer QQp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
-//		QLearningPlayer QQp2 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
-//		Policy QQ = train(QQp1, QQp2);
-//		System.out.println("saving QQ");
-//		savePolicy(QQ, "QQ");
+		QLearningPlayer QQp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
+		QLearningPlayer QQp2 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
+		Policy QQ = train(QQp1, QQp2);
+		System.out.println("saving QQ");
+		savePolicy(QQ, "QQ");
 //		// MR
 //		MinimaxQPlayer MRp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, 0.9999954, new RandomExploration());
 //		Player MRp2 = new RandomPlayer(State.SECOND_PLAYER);

@@ -37,13 +37,9 @@ public class ProbabilisticPlayer implements Player {
                 }
                 // left-down ()
                 else if (distance.x > 0 && distance.y < 0) {
-                    if (distance.y < -1) {
-                        return Action.WEST;
-                    } else {
                         possibleActions[0] = Action.WEST;
                         possibleActions[1] = Action.NORTH;
                         return this.chooseMoving(possibleActions);
-                    }
                 }
                 // left-up
                 else if (distance.x > 0 && distance.y > 0) {
@@ -66,9 +62,6 @@ public class ProbabilisticPlayer implements Player {
                     }
                     // right-up corner   (down , right , put)
                     else if (distance.x > 0 && distance.y < 0) {
-                        if (distance.y < -1) {
-                            return Action.EAST;
-                        }
                         possibleActions[0] = Action.SOUTH;
                         possibleActions[1] = Action.EAST;
                         return this.chooseMoving(possibleActions);
