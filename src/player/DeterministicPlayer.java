@@ -25,7 +25,7 @@ public class DeterministicPlayer implements Player {
     public Action chooseAction(State state){
         position = player ? state.getP1() : state.getP2();
         enemyPosition = !player ? state.getP1() : state.getP2();
-        boolean inPosession = state.getPossession();
+        boolean inPosession = player && state.getPossession();
         Action action;
         // check if in posession of ball
         if (inPosession == player){// if true -> attack
@@ -36,11 +36,11 @@ public class DeterministicPlayer implements Player {
         }
         else{
             // try to intercept
-            //action = intercept(state);
-            //if(action == null){
-                // fall back to moving to own goal
+            action = intercept(state);
+            if(action == null){
+                //fall back to moving to own goal
                 action = moveToGoal(state, goal);
-            //}
+            }
 
         }
         return action;
@@ -79,7 +79,7 @@ public class DeterministicPlayer implements Player {
         for(int i = 0; i < actions.length; i++){
             if(state.isActionPossible(player, actions[i])){
                 Point next = move(position, actions[i]);
-                distances[i] = target.distance(next);
+                distances[i] = distance(target, next);
             }
             else{
                 distances[i] = 400;
@@ -98,6 +98,11 @@ public class DeterministicPlayer implements Player {
         return a;
     }
 
+    private double distance(Point p1, Point p2){
+        double p = Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2);
+        return Math.sqrt(p);
+    }
+
     private Point goalPoint(Point[] p){
         if(p[0].distance(position) < p[1].distance(position)){
             return p[0];
@@ -108,7 +113,7 @@ public class DeterministicPlayer implements Player {
     }
 
     private Point[] getGoal(boolean first){
-        int x = first ? State.MIN_X +1 : State.MAX_X - 1;
+        int x = first ? State.MIN_X -1 : State.MAX_X + 1;
 
         return new Point[] {new Point(x, 1), new Point(x, 2)};
     }

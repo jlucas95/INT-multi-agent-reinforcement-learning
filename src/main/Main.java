@@ -3,20 +3,28 @@ package main;
 import com.sun.xml.internal.ws.encoding.MimeMultipartParser;
 import exploration.RandomExploration;
 import player.*;
+import policy.DeterministicPolicy;
 import policy.Policy;
+import policy.ProbabilisticPolicy;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-//		training();
-//		Policy MM = loadPolicy("MM");
+		training();
 		Policy QR = loadPolicy("QR");
-		Policy QQ = loadPolicy("QQ");
+		Policy QQ = loadPolicy("QQ.ser");
 		Policy QD = loadPolicy("QD");
 		Policy QP = loadPolicy("QP");
+		Policy MM = loadPolicy("MM");
+
+		Set x = ((ProbabilisticPolicy) MM).keySet();
+
 
 //		Task 1
 	    Player QPplayer = new PolicyPlayer(QP);
@@ -25,6 +33,9 @@ public class Main {
 		Player Dplayer1 = new DeterministicPlayer(State.FIRST_PLAYER);
 	    Player Pplayer = new ProbabilisticPlayer(State.SECOND_PLAYER);
 	    Player Pplayer1 = new ProbabilisticPlayer(State.FIRST_PLAYER);
+
+		System.out.print("D VS D" );
+		PlayMatch(Dplayer1, Dplayer);
 
 	    System.out.print("QD VS Dpalyer ");
 		PlayMatch(QDplayer, Dplayer);   // It would be 0 to 0 when Dplayer as the first character
@@ -62,6 +73,24 @@ public class Main {
 //		System.out.println("deterministic:" + sim.getGoalsP1());
 //		System.out.println("minimaxQ:" + sim.getGoalsP2());
 //		System.out.println("");
+	}
+
+	private static void analyzeDetPolicy(DeterministicPolicy p){
+		// get all the states
+
+		// filter states
+
+		// get dominant action? or counts of actions?
+	}
+
+	private static void analyzeProbPolicy(ProbabilisticPolicy p){
+		// get all states
+		Set<State> keys = p.keySet();
+		// filter states based on elements: possesion and locations of the players
+		Set Inpossesion = keys.stream().filter(s -> s.getPossession() == true).collect(Collectors.toSet());
+
+
+		// average the action probabilities per set of states
 	}
 
 	private static void PlayMatch(Player p1, Player p2){
@@ -119,12 +148,12 @@ public class Main {
 		Policy QR = train(QRp1, QRp2);
 		System.out.println("saving QR");
 		savePolicy(QR, "QR");
-		// QQ
+		// QQ.ser
 		QLearningPlayer QQp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
 		QLearningPlayer QQp2 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
 		Policy QQ = train(QQp1, QQp2);
-		System.out.println("saving QQ");
-		savePolicy(QQ, "QQ");
+		System.out.println("saving QQ.ser");
+		savePolicy(QQ, "QQ.ser");
 //		// MR
 //		MinimaxQPlayer MRp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, 0.9999954, new RandomExploration());
 //		Player MRp2 = new RandomPlayer(State.SECOND_PLAYER);
