@@ -23,7 +23,7 @@ public class Main {
 		Policy QP = loadPolicy("QP");
 		Policy MM = loadPolicy("MM");
 
-		Set x = ((ProbabilisticPolicy) MM).keySet();
+//		Set x = ((ProbabilisticPolicy) MM).keySet();
 
 
 //		Task 1
@@ -34,8 +34,7 @@ public class Main {
 	    Player Pplayer = new ProbabilisticPlayer(State.SECOND_PLAYER);
 	    Player Pplayer1 = new ProbabilisticPlayer(State.FIRST_PLAYER);
 
-		System.out.print("D VS D" );
-		PlayMatch(Dplayer1, Dplayer);
+	    Player RPlayer = new RandomPlayer(State.SECOND_PLAYER);
 
 	    System.out.print("QD VS Dpalyer ");
 		PlayMatch(QDplayer, Dplayer);   // It would be 0 to 0 when Dplayer as the first character
@@ -59,7 +58,7 @@ public class Main {
 //
 //		Simulator sim = new Simulator(p1, p2);
 //
-//        sim.simulate(1_000_000, 0.1);
+//      sim.simulate(1_000_000, 0.1);
 //		System.out.println("Training QR finished");
 //		//Policy QR1 = p1.getPolicy();
 //		Policy QR2 = p2.getPolicy();
@@ -67,7 +66,7 @@ public class Main {
 //		//sim.setP1(new PolicyPlayer(QR1));
 //		sim.setP2(new PolicyPlayer(QR2));
 //
-//        System.out.print("running qplayer against probabilistic: 1.000.000 steps");
+//      System.out.print("running qplayer against probabilistic: 1.000.000 steps");
 //		sim.simulate(1_000_000, 0.1);
 //		System.out.println("run finished");
 //		System.out.println("deterministic:" + sim.getGoalsP1());

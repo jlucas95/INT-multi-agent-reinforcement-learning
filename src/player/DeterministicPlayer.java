@@ -1,4 +1,5 @@
 package player;
+import jdk.nashorn.internal.runtime.regexp.joni.Warnings;
 import main.*;
 
 import java.awt.Point;
@@ -60,6 +61,7 @@ public class DeterministicPlayer implements Player {
         // else
         else {
             for (Action a : Action.values()) {
+//               if player first step is up. Then the D player will always lose, it should aiming to
                 if (intercepting(move(position, a))) {
                     return a;
                 }
@@ -69,33 +71,58 @@ public class DeterministicPlayer implements Player {
     }
 
     private boolean intercepting(Point pos){
+        //  Players are in the same row &&    player are between in other player & its goal
         return pos.y == enemyPosition.y && (pos.x < enemyPosition.x == player);
     }
 
     private Action moveToGoal(State state, Point[] goal){
-        Point target = goalPoint(goal);
-        Action[] actions = Action.values();
-        double[] distances = new double[actions.length];
-        for(int i = 0; i < actions.length; i++){
-            if(state.isActionPossible(player, actions[i])){
-                Point next = move(position, actions[i]);
-                distances[i] = distance(target, next);
+        // Only consider p[0] p[1], but there has 4 goal position
+        // If they are not in the same row, moving forward
+        if (position.y != enemyPosition.y){
+            if (player == true){
+                return Action.WEST;
             }
-            else{
-                distances[i] = 400;
+            else return Action.EAST;
+        }else {
+            // Else moving up / down
+            if (position.y != 0){
+                return Action.NORTH;
             }
+            return  Action.SOUTH;
         }
 
-        double smallest = Double.MAX_VALUE;
-        Action a = null;
-        for(int i = 0; i < actions.length; i++){
-            if(distances[i] < smallest){
-                a = actions[i];
-                smallest = distances[i];
-            }
-        }
 
-        return a;
+
+
+
+
+
+
+
+        //Original code
+//        Point target = goalPoint(goal);
+//        Action[] actions = Action.values();
+//        double[] distances = new double[actions.length];
+//        for(int i = 0; i < actions.length; i++){
+//            if(state.isActionPossible(player, actions[i])){
+//                Point next = move(position, actions[i]);
+//                distances[i] = distance(target, next);
+//            }
+//            else{
+//                distances[i] = 400;
+//            }
+//        }
+//
+//        double smallest = Double.MAX_VALUE;
+//        Action a = null;
+//        for(int i = 0; i < actions.length; i++){
+//            if(distances[i] < smallest){
+//                a = actions[i];
+//                smallest = distances[i];
+//            }
+//        }
+//
+//        return a;
     }
 
     private double distance(Point p1, Point p2){
