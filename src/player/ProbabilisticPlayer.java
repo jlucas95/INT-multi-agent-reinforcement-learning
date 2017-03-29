@@ -122,7 +122,6 @@ public class ProbabilisticPlayer implements Player {
                 else if (distance.x > 0 && distance.y > 0) {
                     possibleActions[0] = possibleActions[1] = Action.SOUTH;
                     return this.chooseMoving(possibleActions);
-
                 } else {
                     return Action.WEST;
                 }

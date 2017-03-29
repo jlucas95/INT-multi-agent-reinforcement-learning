@@ -64,7 +64,6 @@ public class PolicyAnalyzer {
 
     private static void analyzeProbPolicy(ProbabilisticPolicy p, Map<String, Predicate<State>> filters){
         // get all states
-
         Set<State> keys = p.keySet();
         Set<String> filterKeys = filters.keySet();
         for(String filterName : filterKeys){
