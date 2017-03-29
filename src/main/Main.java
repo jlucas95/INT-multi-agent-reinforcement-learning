@@ -1,6 +1,5 @@
 package main;
 
-import com.sun.xml.internal.ws.encoding.MimeMultipartParser;
 import exploration.RandomExploration;
 import player.*;
 import policy.DeterministicPolicy;
@@ -8,46 +7,52 @@ import policy.Policy;
 import policy.ProbabilisticPolicy;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		training();
+//		training();
 		Policy QR = loadPolicy("QR");
 		Policy QQ = loadPolicy("QQ.ser");
 		Policy QD = loadPolicy("QD");
 		Policy QP = loadPolicy("QP");
 		Policy MM = loadPolicy("MM");
 
-		Set x = ((ProbabilisticPolicy) MM).keySet();
+		Map<String, Predicate<State>> filters = new HashMap<>();
+		filters.put("In possession", state -> state.getPossession());
+		filters.put("Not in possession", state -> !state.getPossession());
 
+		System.out.println("MM");
+		PolicyAnalyzer.analyzePolicy(MM, filters);
+		System.out.println("QD");
+		PolicyAnalyzer.analyzePolicy(QD, filters);
 
 //		Task 1
-	    Player QPplayer = new PolicyPlayer(QP);
-	    Player QDplayer = new PolicyPlayer(QD);
-	    Player Dplayer = new DeterministicPlayer(State.SECOND_PLAYER);
-		Player Dplayer1 = new DeterministicPlayer(State.FIRST_PLAYER);
-	    Player Pplayer = new ProbabilisticPlayer(State.SECOND_PLAYER);
-	    Player Pplayer1 = new ProbabilisticPlayer(State.FIRST_PLAYER);
-
-		System.out.print("D VS D" );
-		PlayMatch(Dplayer1, Dplayer);
-
-	    System.out.print("QD VS Dpalyer ");
-		PlayMatch(QDplayer, Dplayer);   // It would be 0 to 0 when Dplayer as the first character
-		System.out.print("QD VS Pplayer ");
-		PlayMatch(QDplayer, Pplayer);
-		System.out.print("QP VS Dplayer ");
-		PlayMatch(QPplayer,Dplayer);
-		System.out.print("QP VS Pplayer ");  // It would always 0 to 0
-		PlayMatch(QPplayer,Pplayer);
-		System.out.print("Pplayer VS Dplayer ");
-		Pplayer = new ProbabilisticPlayer(State.FIRST_PLAYER);
-		PlayMatch(Pplayer,Dplayer);
+//	    Player QPplayer = new PolicyPlayer(QP);
+//	    Player QDplayer = new PolicyPlayer(QD);
+//	    Player Dplayer = new DeterministicPlayer(State.SECOND_PLAYER);
+//		Player Dplayer1 = new DeterministicPlayer(State.FIRST_PLAYER);
+//	    Player Pplayer = new ProbabilisticPlayer(State.SECOND_PLAYER);
+//	    Player Pplayer1 = new ProbabilisticPlayer(State.FIRST_PLAYER);
+//
+//		System.out.print("D VS D" );
+//		PlayMatch(Dplayer1, Dplayer);
+//
+//	    System.out.print("QD VS Dpalyer ");
+//		PlayMatch(QDplayer, Dplayer);   // It would be 0 to 0 when Dplayer as the first character
+//		System.out.print("QD VS Pplayer ");
+//		PlayMatch(QDplayer, Pplayer);
+//		System.out.print("QP VS Dplayer ");
+//		PlayMatch(QPplayer,Dplayer);
+//		System.out.print("QP VS Pplayer ");  // It would always 0 to 0
+//		PlayMatch(QPplayer,Pplayer);
+//		System.out.print("Pplayer VS Dplayer ");
+//		Pplayer = new ProbabilisticPlayer(State.FIRST_PLAYER);
+//		PlayMatch(Pplayer,Dplayer);
 
 //		//QLearningPlayer p1 = new QLearningPlayer(State.FIRST_PLAYER, 0.9, new RandomExploration());
 //		Player p1 = new DeterministicPlayer(State.FIRST_PLAYER);
@@ -73,24 +78,6 @@ public class Main {
 //		System.out.println("deterministic:" + sim.getGoalsP1());
 //		System.out.println("minimaxQ:" + sim.getGoalsP2());
 //		System.out.println("");
-	}
-
-	private static void analyzeDetPolicy(DeterministicPolicy p){
-		// get all the states
-
-		// filter states
-
-		// get dominant action? or counts of actions?
-	}
-
-	private static void analyzeProbPolicy(ProbabilisticPolicy p){
-		// get all states
-		Set<State> keys = p.keySet();
-		// filter states based on elements: possesion and locations of the players
-		Set Inpossesion = keys.stream().filter(s -> s.getPossession() == true).collect(Collectors.toSet());
-
-
-		// average the action probabilities per set of states
 	}
 
 	private static void PlayMatch(Player p1, Player p2){
