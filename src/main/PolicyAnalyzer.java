@@ -121,7 +121,6 @@ public class PolicyAnalyzer {
             average[i] = average[i]/values.size();
         }
         return average;
-
     }
 
 }
