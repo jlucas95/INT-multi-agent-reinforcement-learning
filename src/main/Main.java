@@ -17,19 +17,22 @@ public class Main {
 
 //		training();
 		Policy QR = loadPolicy("QR");
-		Policy QQ = loadPolicy("QQ.ser");
+		Policy QQ = loadPolicy("QQ");
 		Policy QD = loadPolicy("QD");
 		Policy QP = loadPolicy("QP");
 		Policy MM = loadPolicy("MM");
+		Policy MD = loadPolicy("MD");
+		Policy MP = loadPolicy("MP");
 
-		Map<String, Predicate<State>> filters = new HashMap<>();
-		filters.put("In possession", state -> state.getPossession());
-		filters.put("Not in possession", state -> !state.getPossession());
-
-		System.out.println("MM");
-		PolicyAnalyzer.analyzePolicy(MM, filters);
-		System.out.println("QD");
-		PolicyAnalyzer.analyzePolicy(QD, filters);
+//		Map<String, Predicate<State>> filters = new HashMap<>();
+//		filters.put("xi filter", state -> state.getP1().x > 1);
+//		filters.put("In possession", state -> state.getPossession());
+//		filters.put("Not in possession", state -> !state.getPossession());
+//
+//		System.out.println("MM");
+//		PolicyAnalyzer.analyzePolicy(MM, filters);
+//		System.out.println("QD");
+//		PolicyAnalyzer.analyzePolicy(QD, filters);
 
 //		Task 1
 //	    Player QPplayer = new PolicyPlayer(QP);
@@ -117,6 +120,8 @@ public class Main {
 	}
 
 	private static void training(){
+
+		double minimaxDecay = 1.0; //old val:0.999954
 		// QD
 		QLearningPlayer QDp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
 		Player QDp2 = new DeterministicPlayer(State.SECOND_PLAYER);
@@ -139,20 +144,32 @@ public class Main {
 		QLearningPlayer QQp1 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
 		QLearningPlayer QQp2 = new QLearningPlayer(State.FIRST_PLAYER,0.9, new RandomExploration());
 		Policy QQ = train(QQp1, QQp2);
-		System.out.println("saving QQ.ser");
-		savePolicy(QQ, "QQ.ser");
-//		// MR
-//		MinimaxQPlayer MRp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, 0.9999954, new RandomExploration());
-//		Player MRp2 = new RandomPlayer(State.SECOND_PLAYER);
-//		Policy MR = train(MRp1, MRp2);
-//		System.out.println("saving MR");
-//		savePolicy(MR, "MR");
-//		// MM
-//		MinimaxQPlayer MMp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, 0.9999954, new RandomExploration());
-//		MinimaxQPlayer MMp2 = new MinimaxQPlayer(State.SECOND_PLAYER,0.9, 0.9999954, new RandomExploration());
-//		Policy MM = train(MMp1, MMp2);
-//		System.out.println("saving MM");
-//		savePolicy(MM, "MM");
+		System.out.println("saving QQ");
+		savePolicy(QQ, "QQ");
+		// MR
+		MinimaxQPlayer MRp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, minimaxDecay, new RandomExploration());
+		Player MRp2 = new RandomPlayer(State.SECOND_PLAYER);
+		Policy MR = train(MRp1, MRp2);
+		System.out.println("saving MR");
+		savePolicy(MR, "MR");
+		// MM
+		MinimaxQPlayer MMp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, minimaxDecay, new RandomExploration());
+		MinimaxQPlayer MMp2 = new MinimaxQPlayer(State.SECOND_PLAYER,0.9, minimaxDecay, new RandomExploration());
+		Policy MM = train(MMp1, MMp2);
+		System.out.println("saving MM");
+		savePolicy(MM, "MM");
+		// MD
+		MinimaxQPlayer MDp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, minimaxDecay, new RandomExploration());
+		Player MDp2 = new DeterministicPlayer(State.SECOND_PLAYER);
+		Policy MD = train(MDp1, MDp2);
+		System.out.println("saving MD");
+		savePolicy(MD, "MD");
+		// MP
+		MinimaxQPlayer MPp1 = new MinimaxQPlayer(State.FIRST_PLAYER,0.9, minimaxDecay, new RandomExploration());
+		Player MPp2 = new DeterministicPlayer(State.SECOND_PLAYER);
+		Policy MP = train(MPp1, MPp2);
+		System.out.println("saving MP");
+		savePolicy(MP, "MP");
 	}
 
 	// trains 2 players and returns the policy of player 1
@@ -168,7 +185,7 @@ public class Main {
 
 	private static void _train(Player p1, Player p2){
 		Simulator sim = new Simulator(p1, p2);
-		sim.simulate(1_000_000, 0.1);
+	      		sim.simulate(1_000_000, 0.1);
 		System.out.println("Training finished");
 	}
 
