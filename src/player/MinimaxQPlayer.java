@@ -113,18 +113,18 @@ public class MinimaxQPlayer implements Player {
 
 	@Override
 	public void receiveReward(double reward, State newState, Action opponentAction) {
-//		After receiving reward rew for moving from state s to s’
-//		via action a and opponent’s action o,
-//				Let Q[s,a,o] := (1-alpha) * Q[s,a,o] + alpha * (rew + gamma * V[s’])
+//		After receiving reward rew for moving from state s to sï¿½
+//		via action a and opponentï¿½s action o,
+//				Let Q[s,a,o] := (1-alpha) * Q[s,a,o] + alpha * (rew + gamma * V[sï¿½])
 		Triple sao = new Triple<>(newState, a, opponentAction);
 		double newq = (1 - alpha) * qValues.get(sao) + alpha * (reward + gamma * V.get(newState));
 		qValues.put(sao, newq);
 		
 //		Use linear programming to find pi[s,.] such that:
-//		pi[s,.] := argmaxfpi’[s,.], minfo’, sumfa’, pi[s,a’] * Q[s,a’,o’]ggg
+//		pi[s,.] := argmaxfpiï¿½[s,.], minfoï¿½, sumfaï¿½, pi[s,aï¿½] * Q[s,aï¿½,oï¿½]ggg
 		linearProgramming();
 
-//		Let V[s] := minfo’, sumfa’, pi[s,a’] * Q[s,a’,o’]gg
+//		Let V[s] := minfoï¿½, sumfaï¿½, pi[s,aï¿½] * Q[s,aï¿½,oï¿½]gg
 		V.put(s, getNewV());
 
 //		Let alpha := alpha * decay
@@ -132,7 +132,7 @@ public class MinimaxQPlayer implements Player {
 	}
 
 	private double getNewV(){
-		// min{o’, sum{a’, pi[s,a’] * Q[s,a’,o’] }}
+		// min{oï¿½, sum{aï¿½, pi[s,aï¿½] * Q[s,aï¿½,oï¿½] }}
 		// for every own and opponent action in state s get the sum of the pi and q value multiplied
 		// then get the lowest value
 		Action[] actions = Action.values();

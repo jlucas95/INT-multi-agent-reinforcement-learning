@@ -28,9 +28,7 @@ public class ProbabilisticPlayer implements Player {
         if (inPosession == player) {
             // If its the first player(A)
             if (player) {
-                // 3 different kinds of situation:  1. Same row 2. left-up corner(stay put & moving forward & down )
-                //  In the same row ( 33.3% up & 33.3% down &  33.3% put )
-                if (distance.x == 0) {
+                    if (distance.y == 0) {
                     possibleActions[0] = Action.NORTH;
                     possibleActions[1] = Action.SOUTH;
                     return  this.chooseMoving(possibleActions);
@@ -82,7 +80,7 @@ public class ProbabilisticPlayer implements Player {
             // if its the first player
             if (player){
                 // 3 different kinds of situation:  1. Same row 2. left-up  3. left-down
-                if (distance.x == 0) {
+                if (distance.y == 0) {
                     possibleActions[0] = Action.WEST;
                     possibleActions[1] = Action.STAND;
                     return this.chooseMoving(possibleActions);

@@ -15,14 +15,15 @@ public class Main {
 
 	public static void main(String[] args) {
 
+
 //		training();
-		Policy QR = loadPolicy("QR");
-		Policy QQ = loadPolicy("QQ");
-		Policy QD = loadPolicy("QD");
-		Policy QP = loadPolicy("QP");
-		Policy MM = loadPolicy("MM");
-		Policy MD = loadPolicy("MD");
-		Policy MP = loadPolicy("MP");
+//		Policy QR = loadPolicy("QR");
+//		Policy QQ = loadPolicy("QQ");
+//		Policy QD = loadPolicy("QD");
+//		Policy QP = loadPolicy("QP");
+//		Policy MM = loadPolicy("MM");
+//		Policy MD = loadPolicy("MD");
+//		Policy MP = loadPolicy("MP");
 
 //		Map<String, Predicate<State>> filters = new HashMap<>();
 //		filters.put("xi filter", state -> state.getP1().x > 1);
